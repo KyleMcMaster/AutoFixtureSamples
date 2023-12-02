@@ -15,10 +15,10 @@ public class UpdateContributorHandler(IRepository<Contributor> _repository)
       return Result.NotFound();
     }
 
-    existingContributor.UpdateName(request.NewName!);
+    existingContributor.UpdateFirstName(request.NewFirstName!);
 
     await _repository.UpdateAsync(existingContributor, cancellationToken);
 
-    return Result.Success(new ContributorDTO(existingContributor.Id, existingContributor.Name));
+    return Result.Success(new ContributorDTO(existingContributor.Id, existingContributor.FirstName));
   }
 }

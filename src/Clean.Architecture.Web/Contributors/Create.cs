@@ -23,7 +23,16 @@ public class Create(IMediator _mediator)
       // XML Docs are used by default but are overridden by these properties:
       //s.Summary = "Create a new Contributor.";
       //s.Description = "Create a new Contributor. A valid name is required.";
-      s.ExampleRequest = new CreateContributorRequest { Name = "Contributor Name" };
+      s.ExampleRequest = new CreateContributorRequest 
+      {
+        Email = "Contributor Email",
+        FirstName = "Contributor FirstName",
+        LastName = "Contributor LastName",
+        Followers = 123,
+        Following = 456,
+        Stars = 789,
+        Status = "Not Set"
+      };
     });
   }
 
@@ -31,11 +40,19 @@ public class Create(IMediator _mediator)
     CreateContributorRequest request,
     CancellationToken cancellationToken)
   {
-    var result = await _mediator.Send(new CreateContributorCommand(request.Name!));
+    var result = await _mediator.Send(new CreateContributorCommand(
+      Email: request.Email,
+      FirstName: request.FirstName,
+      LastName: request.LastName,
+      Followers: request.Followers,
+      Following: request.Following,
+      Stars: request.Stars,
+      Status: request.Status),
+      cancellationToken);
 
-    if(result.IsSuccess)
+    if (result.IsSuccess)
     {
-      Response = new CreateContributorResponse(result.Value, request.Name!);
+      Response = new CreateContributorResponse(result.Value, request.FirstName, request.LastName);
       return;
     }
     // TODO: Handle other cases as necessary

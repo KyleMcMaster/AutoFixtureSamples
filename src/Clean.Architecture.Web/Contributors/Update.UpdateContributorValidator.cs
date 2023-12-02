@@ -11,7 +11,7 @@ public class UpdateContributorValidator : Validator<UpdateContributorRequest>
 {
   public UpdateContributorValidator()
   {
-    RuleFor(x => x.Name)
+    RuleFor(x => x.Firstname)
       .NotEmpty()
       .WithMessage("Name is required.")
       .MinimumLength(2)

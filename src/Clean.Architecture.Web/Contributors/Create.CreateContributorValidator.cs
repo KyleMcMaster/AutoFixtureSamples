@@ -11,9 +11,9 @@ public class CreateContributorValidator : Validator<CreateContributorRequest>
 {
   public CreateContributorValidator()
   {
-    RuleFor(x => x.Name)
+    RuleFor(x => x.FirstName)
       .NotEmpty()
-      .WithMessage("Name is required.")
+      .WithMessage("FirstName is required.")
       .MinimumLength(2)
       .MaximumLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
   }

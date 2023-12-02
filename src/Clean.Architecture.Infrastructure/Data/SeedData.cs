@@ -6,8 +6,22 @@ namespace Clean.Architecture.Infrastructure.Data;
 
 public static class SeedData
 {
-  public static readonly Contributor Contributor1 = new("Ardalis");
-  public static readonly Contributor Contributor2 = new("Snowfrog");
+  public static readonly Contributor Contributor1 = new(
+      email: "Email1@Microsoft.com",
+      firstName: "Ardalis",
+      lastName: "Jones",
+      followers: 1,
+      following: 2,
+      stars: 3,
+      status: ContributorStatus.NotSet.Name);
+  public static readonly Contributor Contributor2 = new(
+      email: "Email1@Microsoft.com",
+      firstName: "Snowfrog",
+      lastName: "Hill",
+      followers: 4,
+      following: 5,
+      stars: 6,
+      status: ContributorStatus.NotSet.Name);
 
   public static void Initialize(IServiceProvider serviceProvider)
   {

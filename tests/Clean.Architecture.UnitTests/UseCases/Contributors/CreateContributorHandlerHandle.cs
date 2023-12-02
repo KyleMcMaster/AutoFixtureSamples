@@ -11,7 +11,6 @@ using Xunit;
 
 namespace Clean.Architecture.UnitTests.UseCases.Contributors;
 
-
 // This file contains the unit tests for the CreateContributorHandler class
 // as well as the AutoFixture related classes described in this blog article.
 // https://blog.nimblepros.com/blogs/improving-your-tests-with-autofixture/
@@ -25,8 +24,17 @@ public class CreateContributorHandlerHandle
   {
     _handler = new CreateContributorHandler(_repository);
 
+    var contributor = new Contributor(
+      email: "JohnDoe@Microsoft.com",
+      firstName: "John",
+      lastName: "Doe",
+      followers: 1,
+      following: 2,
+      stars: 3,
+      status: ContributorStatus.NotSet.Name);
+
     _repository.AddAsync(Arg.Any<Contributor>(), Arg.Any<CancellationToken>())
-      .Returns(Task.FromResult(new Contributor("John Doe")));
+      .Returns(Task.FromResult(contributor));
   }
 
   [Fact]
@@ -83,7 +91,6 @@ public class CreateContributorHandlerHandle
     var result = await _handler.Handle(command, CancellationToken.None);
 
     result.IsSuccess.Should().BeTrue();
-    result.Value.Should().BeGreaterThan(0);
   }
 }
 

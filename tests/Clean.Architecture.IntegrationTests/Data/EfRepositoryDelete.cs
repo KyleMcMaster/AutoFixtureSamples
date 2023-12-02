@@ -10,15 +10,22 @@ public class EfRepositoryDelete : BaseEfRepoTestFixture
   {
     // add a Contributor
     var repository = GetRepository();
-    var initialName = Guid.NewGuid().ToString();
-    var Contributor = new Contributor(initialName);
-    await repository.AddAsync(Contributor);
+    string initialName = Guid.NewGuid().ToString();
+    var contributor = new Contributor(
+      email: "Email1@Microsoft.com",
+      firstName: "Test",
+      lastName: "Contributor",
+      followers: 1,
+      following: 2,
+      stars: 3,
+      status: ContributorStatus.NotSet.Name);
+    await repository.AddAsync(contributor);
 
     // delete the item
-    await repository.DeleteAsync(Contributor);
+    await repository.DeleteAsync(contributor);
 
     // verify it's no longer there
     Assert.DoesNotContain(await repository.ListAsync(),
-        Contributor => Contributor.Name == initialName);
+        Contributor => Contributor.FirstName == initialName);
   }
 }

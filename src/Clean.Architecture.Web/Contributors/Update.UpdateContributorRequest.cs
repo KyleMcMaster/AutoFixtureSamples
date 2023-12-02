@@ -12,5 +12,5 @@ public class UpdateContributorRequest
   [Required]
   public int Id { get; set; }
   [Required]
-  public string? Name { get; set; }
+  public string? Firstname { get; set; }
 }

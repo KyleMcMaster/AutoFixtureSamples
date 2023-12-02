@@ -11,36 +11,42 @@ public class EfRepositoryUpdate : BaseEfRepoTestFixture
   {
     // add a Contributor
     var repository = GetRepository();
-    var initialName = Guid.NewGuid().ToString();
-    var Contributor = new Contributor(initialName);
+    var contributor = new Contributor(
+      email: "Email1@Microsoft.com",
+      firstName: "Test",
+      lastName: "Contributor",
+      followers: 1,
+      following: 2,
+      stars: 3,
+      status: ContributorStatus.NotSet.Name);
 
-    await repository.AddAsync(Contributor);
+    await repository.AddAsync(contributor);
 
     // detach the item so we get a different instance
-    _dbContext.Entry(Contributor).State = EntityState.Detached;
+    _dbContext.Entry(contributor).State = EntityState.Detached;
 
     // fetch the item and update its title
     var newContributor = (await repository.ListAsync())
-        .FirstOrDefault(Contributor => Contributor.Name == initialName);
+        .FirstOrDefault(Contributor => Contributor.FirstName == contributor.FirstName);
     if (newContributor == null)
     {
       Assert.NotNull(newContributor);
       return;
     }
-    Assert.NotSame(Contributor, newContributor);
+    Assert.NotSame(contributor, newContributor);
     var newName = Guid.NewGuid().ToString();
-    newContributor.UpdateName(newName);
+    newContributor.UpdateFirstName(newName);
 
     // Update the item
     await repository.UpdateAsync(newContributor);
 
     // Fetch the updated item
     var updatedItem = (await repository.ListAsync())
-        .FirstOrDefault(Contributor => Contributor.Name == newName);
+        .FirstOrDefault(Contributor => Contributor.FirstName == newName);
 
     Assert.NotNull(updatedItem);
-    Assert.NotEqual(Contributor.Name, updatedItem?.Name);
-    Assert.Equal(Contributor.Status, updatedItem?.Status);
+    Assert.NotEqual(contributor.FirstName, updatedItem?.FirstName);
+    Assert.Equal(contributor.Status, updatedItem?.Status);
     Assert.Equal(newContributor.Id, updatedItem?.Id);
   }
 }
