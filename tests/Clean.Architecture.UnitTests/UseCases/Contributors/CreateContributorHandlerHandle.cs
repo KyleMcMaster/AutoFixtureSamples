@@ -118,15 +118,15 @@ public class YourDomainSpecificFixture : Fixture
 {
   public YourDomainSpecificFixture()
   {
-      Customizations.Add(new ContributorStatusNotSetGenerator());
+    Customizations.Add(new ContributorStatusNotSetGenerator());
     // Other potential customizations for your domain like a ContributorEmailGenerator, etc.
   }
 }
 
 public class YourDomainDataAttribute : AutoDataAttribute
 {
-  public YourDomainDataAttribute() 
-      : base(() => new YourDomainSpecificFixture())
+  public YourDomainDataAttribute()
+    : base(() => new YourDomainSpecificFixture())
   {
   }
 }
